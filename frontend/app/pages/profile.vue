@@ -1,18 +1,23 @@
 <template>
   <div>
-    <h1 class="text-h5 font-weight-bold mb-6">Mi Perfil</h1>
+    <header class="tc-page-header">
+      <div>
+        <h1>Mi Perfil</h1>
+        <p>Información personal y seguridad de tu cuenta</p>
+      </div>
+    </header>
 
     <v-row>
       <!-- Avatar & role card -->
       <v-col cols="12" md="4">
-        <v-card rounded="lg" class="text-center pa-6 mb-4">
-          <v-avatar color="primary" variant="tonal" size="96" class="mb-4">
-            <span class="text-h4 font-weight-bold">{{ initials }}</span>
-          </v-avatar>
-          <h2 class="text-subtitle-1 font-weight-bold">{{ authStore.fullName }}</h2>
+        <v-card rounded="lg" class="text-center pa-6 mb-4 tc-profile-card">
+          <div class="tc-profile-avatar">
+            <span>{{ initials }}</span>
+          </div>
+          <h2 class="text-subtitle-1 font-weight-bold mt-4">{{ authStore.fullName }}</h2>
           <p class="text-body-2 text-medium-emphasis mb-3">{{ authStore.user?.email }}</p>
-          <v-chip :color="roleColor" variant="tonal">
-            <v-icon start>{{ roleIcon }}</v-icon>
+          <v-chip :color="roleColor" variant="tonal" size="small">
+            <v-icon start size="14">{{ roleIcon }}</v-icon>
             {{ authStore.roleLabel }}
           </v-chip>
         </v-card>
@@ -196,3 +201,26 @@ const changePassword = async () => {
   }
 }
 </script>
+
+<style scoped>
+.tc-profile-avatar {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  box-shadow: 0 0 0 6px rgba(34,197,94,0.08), 0 8px 24px rgba(34,197,94,0.25);
+}
+.tc-profile-avatar span {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #06170d;
+  letter-spacing: -0.02em;
+}
+.tc-profile-card {
+  background: linear-gradient(180deg, rgba(34,197,94,0.06), transparent 60%) !important;
+}
+</style>

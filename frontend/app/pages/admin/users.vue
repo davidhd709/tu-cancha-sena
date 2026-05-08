@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="d-flex align-center mb-6">
+    <header class="tc-page-header">
       <div>
-        <h1 class="text-h5 font-weight-bold">Usuarios</h1>
-        <p class="text-body-2 text-medium-emphasis">Gestión completa de usuarios del sistema</p>
+        <h1>Usuarios</h1>
+        <p>Gestión completa de usuarios del sistema</p>
       </div>
       <v-spacer />
-      <v-btn color="primary" prepend-icon="mdi-account-plus" @click="openCreate">
+      <v-btn color="primary" variant="flat" prepend-icon="mdi-account-plus" @click="openCreate">
         Nuevo Usuario
       </v-btn>
-    </div>
+    </header>
 
     <v-card rounded="lg">
       <!-- Filters -->

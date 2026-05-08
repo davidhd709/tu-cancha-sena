@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="d-flex align-center mb-6">
+    <header class="tc-page-header">
       <div>
-        <h1 class="text-h5 font-weight-bold">Todas las Reservas</h1>
-        <p class="text-body-2 text-medium-emphasis">Historial global de reservas</p>
+        <h1>Todas las Reservas</h1>
+        <p>Historial global de reservas</p>
       </div>
       <v-spacer />
       <v-select
@@ -14,7 +14,7 @@
         hide-details
         style="max-width:220px"
       />
-    </div>
+    </header>
 
     <v-card rounded="lg">
       <v-data-table

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="d-flex align-center mb-6">
+    <header class="tc-page-header">
       <div>
-        <h1 class="text-h5 font-weight-bold">Mis Negocios</h1>
-        <p class="text-body-2 text-medium-emphasis">Administra tus establecimientos</p>
+        <h1>Mis Negocios</h1>
+        <p>Administra tus establecimientos</p>
       </div>
-    </div>
+    </header>
 
     <v-row>
       <v-col v-for="biz in businesses" :key="biz.id" cols="12" md="6">

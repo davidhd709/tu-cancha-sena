@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="d-flex align-center mb-6">
+    <header class="tc-page-header">
       <div>
-        <h1 class="text-h5 font-weight-bold">Mis Reservas</h1>
-        <p class="text-body-2 text-medium-emphasis">Historial de todas tus reservas</p>
+        <h1>Mis Reservas</h1>
+        <p>Historial de todas tus reservas</p>
       </div>
       <v-spacer />
-      <v-btn to="/client/courts" color="primary" prepend-icon="mdi-plus">
+      <v-btn to="/client/courts" color="primary" variant="flat" prepend-icon="mdi-plus">
         Nueva Reserva
       </v-btn>
-    </div>
+    </header>
 
     <!-- Tabs by status -->
     <v-tabs v-model="activeTab" color="primary" class="mb-4">

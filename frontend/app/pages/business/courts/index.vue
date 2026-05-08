@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="d-flex align-center mb-6">
+    <header class="tc-page-header">
       <div>
-        <h1 class="text-h5 font-weight-bold">Mis Canchas</h1>
-        <p class="text-body-2 text-medium-emphasis">Administra las canchas y sus horarios</p>
+        <h1>Mis Canchas</h1>
+        <p>Administra las canchas y sus horarios</p>
       </div>
       <v-spacer />
-      <v-btn color="primary" prepend-icon="mdi-plus" @click="openCreate" :disabled="!selectedBusinessId">
+      <v-btn color="primary" variant="flat" prepend-icon="mdi-plus" @click="openCreate" :disabled="!selectedBusinessId">
         Nueva Cancha
       </v-btn>
-    </div>
+    </header>
 
     <!-- Business selector -->
     <v-select

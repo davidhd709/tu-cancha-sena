@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="d-flex align-center mb-6">
+    <header class="tc-page-header">
       <div>
-        <h1 class="text-h5 font-weight-bold">Negocios</h1>
-        <p class="text-body-2 text-medium-emphasis">Gestión de negocios registrados</p>
+        <h1>Negocios</h1>
+        <p>Gestión de negocios registrados</p>
       </div>
       <v-spacer />
-      <v-btn color="primary" prepend-icon="mdi-plus" @click="openCreate">
+      <v-btn color="primary" variant="flat" prepend-icon="mdi-plus" @click="openCreate">
         Nuevo Negocio
       </v-btn>
-    </div>
+    </header>
 
     <!-- Cards grid -->
     <v-row>
