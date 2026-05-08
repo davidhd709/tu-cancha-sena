@@ -2,12 +2,12 @@
   <div>
     <!-- Admin Dashboard -->
     <template v-if="authStore.isAdmin">
-      <header class="tc-page-header">
+      <div class="d-flex align-center mb-6">
         <div>
-          <h1>Panel de Administración</h1>
-          <p>Resumen general del sistema · {{ authStore.fullName }}</p>
+          <h1 class="text-h5 font-weight-bold">Panel de Administración</h1>
+          <p class="text-body-2 text-medium-emphasis">Resumen general del sistema</p>
         </div>
-      </header>
+      </div>
 
       <!-- Stats Cards -->
       <v-row class="mb-6">
@@ -80,16 +80,16 @@
 
     <!-- Business Dashboard -->
     <template v-else-if="authStore.isBusiness">
-      <header class="tc-page-header">
+      <div class="d-flex align-center mb-6">
         <div>
-          <h1>Mi Panel de Negocio</h1>
-          <p>Gestiona tus canchas y reservas · {{ authStore.fullName }}</p>
+          <h1 class="text-h5 font-weight-bold">Mi Panel de Negocio</h1>
+          <p class="text-body-2 text-medium-emphasis">Gestiona tus canchas y reservas</p>
         </div>
         <v-spacer />
-        <v-btn to="/business" color="primary" prepend-icon="mdi-store" variant="flat">
+        <v-btn to="/business" color="primary" prepend-icon="mdi-store">
           Mis Negocios
         </v-btn>
-      </header>
+      </div>
 
       <v-row class="mb-6">
         <v-col v-for="stat in businessStats" :key="stat.label" cols="12" sm="6" lg="3">
@@ -160,16 +160,16 @@
 
     <!-- Client Dashboard -->
     <template v-else>
-      <header class="tc-page-header">
+      <div class="d-flex align-center mb-6">
         <div>
-          <h1>¡Hola, {{ authStore.user?.firstName }}!</h1>
-          <p>Aquí están tus próximas reservas</p>
+          <h1 class="text-h5 font-weight-bold">¡Hola, {{ authStore.user?.firstName }}!</h1>
+          <p class="text-body-2 text-medium-emphasis">Aquí están tus próximas reservas</p>
         </div>
         <v-spacer />
-        <v-btn to="/client/courts" color="primary" prepend-icon="mdi-soccer-field" variant="flat">
+        <v-btn to="/client/courts" color="primary" prepend-icon="mdi-soccer-field">
           Reservar Cancha
         </v-btn>
-      </header>
+      </div>
 
       <!-- Client stats -->
       <v-row class="mb-6">

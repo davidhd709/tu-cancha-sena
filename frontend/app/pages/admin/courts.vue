@@ -1,9 +1,9 @@
 <template>
   <div>
-    <header class="tc-page-header">
+    <div class="d-flex align-center mb-6">
       <div>
-        <h1>Canchas</h1>
-        <p>Todas las canchas registradas en el sistema</p>
+        <h1 class="text-h5 font-weight-bold">Canchas</h1>
+        <p class="text-body-2 text-medium-emphasis">Todas las canchas registradas en el sistema</p>
       </div>
       <v-spacer />
       <v-text-field
@@ -15,7 +15,7 @@
         style="max-width:260px"
         class="mr-3"
       />
-    </header>
+    </div>
 
     <v-card rounded="lg">
       <v-data-table

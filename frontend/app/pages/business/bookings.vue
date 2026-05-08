@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- ── Header ──────────────────────────────────────────────────────────── -->
-    <header class="tc-page-header" style="flex-wrap: wrap; gap: 12px;">
+    <div class="d-flex align-center mb-5 flex-wrap gap-3">
       <div>
-        <h1>Reservas</h1>
-        <p>Vista semanal de tus canchas</p>
+        <h1 class="text-h5 font-weight-bold">Reservas</h1>
+        <p class="text-body-2 text-medium-emphasis">Vista semanal de tus canchas</p>
       </div>
       <v-spacer />
       <v-select
@@ -17,7 +17,7 @@
         density="compact"
         style="max-width: 260px"
       />
-    </header>
+    </div>
 
     <!-- ── Week navigation ─────────────────────────────────────────────────── -->
     <div class="d-flex align-center gap-2 mb-4 flex-wrap">

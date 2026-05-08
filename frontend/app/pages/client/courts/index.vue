@@ -1,11 +1,11 @@
 <template>
   <div>
-    <header class="tc-page-header">
+    <div class="d-flex align-center mb-6">
       <div>
-        <h1>Explorar Canchas</h1>
-        <p>Encuentra y reserva la cancha perfecta</p>
+        <h1 class="text-h5 font-weight-bold">Explorar Canchas</h1>
+        <p class="text-body-2 text-medium-emphasis">Encuentra y reserva la cancha perfecta</p>
       </div>
-    </header>
+    </div>
 
     <!-- Filters -->
     <v-row class="mb-4" dense>

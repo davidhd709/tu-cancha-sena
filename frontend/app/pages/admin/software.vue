@@ -1,15 +1,15 @@
 <template>
   <div>
-    <header class="tc-page-header">
+    <div class="d-flex align-center mb-6">
       <div>
-        <h1>Software / Landing</h1>
-        <p>Gestión de módulos del software</p>
+        <h1 class="text-h5 font-weight-bold">Software / Landing</h1>
+        <p class="text-body-2 text-medium-emphasis">Gestión de módulos del software</p>
       </div>
       <v-spacer />
-      <v-btn color="primary" variant="flat" prepend-icon="mdi-plus" @click="openCreateDialog">
+      <v-btn color="primary" prepend-icon="mdi-plus" @click="openCreateDialog">
         Nuevo Software
       </v-btn>
-    </header>
+    </div>
 
     <v-row>
       <v-col v-for="sw in softwareList" :key="sw.id" cols="12" sm="6" lg="4">
