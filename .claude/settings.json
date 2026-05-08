@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r 'apiBase\\\\|fetch\\\\|$fetch' /run/media/ingenierohenrydavid/0E05E2BD5C0F60A7/HENRY/PROYECTOS/tucancha-sena/app/pages/auth/login.vue /run/media/ingenierohenrydavid/0E05E2BD5C0F60A7/HENRY/PROYECTOS/tucancha-sena/app/pages/auth/register.vue)"
+    ]
+  }
+}
