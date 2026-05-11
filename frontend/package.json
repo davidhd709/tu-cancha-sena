@@ -11,7 +11,14 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
+<<<<<<< HEAD
     "start": "node .output/server/index.mjs"
+=======
+    "start": "node .output/server/index.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:cov": "vitest run --coverage"
+>>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -31,11 +38,23 @@
     "@tiptap/vue-3": "^3.22.4",
     "nuxt": "^4.4.2",
     "pinia": "^3.0.4",
+<<<<<<< HEAD
+=======
+    "tucancha-sena": "file:..",
+>>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
     "vue": "^3.5.32",
     "vue-router": "^5.0.4"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "vite-plugin-vuetify": "^2.1.3",
+=======
+    "@vitejs/plugin-vue": "^6.0.6",
+    "@vue/test-utils": "^2.4.10",
+    "jsdom": "^29.1.1",
+    "vite-plugin-vuetify": "^2.1.3",
+    "vitest": "^4.1.5",
+>>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
     "vuetify": "^4.0.6"
   }
 }
