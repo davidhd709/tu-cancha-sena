@@ -99,7 +99,7 @@
     <section class="section canchas-section" id="canchas">
       <div class="container">
         <div class="section-header">
-          <span class="label-tag">Nuestras canchas</span>
+          <span class="label-tag">Nuestras canchas!!!</span>
           <h2 class="section-heading">Canchas de primera calidad<br><span class="text-green">listas para jugar</span></h2>
           <p class="section-desc">Instalaciones modernas con césped sintético de alto rendimiento, iluminación LED y vestuarios completos.</p>
         </div>
