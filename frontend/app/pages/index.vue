@@ -8,7 +8,7 @@
       <div class="nav-inner">
         <!-- Brand -->
         <NuxtLink to="/" class="nav-brand">
-          <img src="/logo.jpeg" alt="TuCancha" class="nav-logo-img" />
+          <img src="/logo.jpeg" alt="TuCaNcha" class="nav-logo-img" />
         </NuxtLink>
 
         <!-- Links -->
