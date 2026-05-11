@@ -3,18 +3,18 @@ import { IsDateString, IsOptional, IsString, Matches } from 'class-validator';
 
 export class CreateBookingDto {
   @IsString()
-  courtId: string;
+  courtId!: string;
 
   @IsDateString()
-  date: string;
+  date!: string;
 
   @IsString()
   @Matches(/^\d{2}:\d{2}$/)
-  startTime: string;
+  startTime!: string;
 
   @IsString()
   @Matches(/^\d{2}:\d{2}$/)
-  endTime: string;
+  endTime!: string;
 
   @IsOptional()
   @IsString()
@@ -33,5 +33,5 @@ export class RejectBookingDto {
 
 export class AvailableSlotsQueryDto {
   @IsDateString()
-  date: string;
+  date!: string;
 }
