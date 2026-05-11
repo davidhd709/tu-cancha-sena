@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer'
+import { Type } from 'class-transformer';
 import {
   ArrayNotEmpty,
   IsArray,
@@ -11,8 +11,8 @@ import {
   Matches,
   Min,
   ValidateNested,
-} from 'class-validator'
-import { DAYS } from '../../businesses/dto/business.dto'
+} from 'class-validator';
+import { DAYS } from '../../businesses/dto/business.dto';
 
 export const COURT_TYPES = [
   'football_5',
@@ -22,37 +22,37 @@ export const COURT_TYPES = [
   'futsal',
   'beach_soccer',
   'mini_football',
-] as const
+] as const;
 
-export const COURT_STATUS = ['available', 'unavailable'] as const
+export const COURT_STATUS = ['available', 'unavailable'] as const;
 
 export class CreateCourtDto {
-  @IsString() businessId: string
-  @IsString() name: string
-  @IsIn(COURT_TYPES) type: (typeof COURT_TYPES)[number]
-  @IsOptional() @IsString() description?: string
-  @IsNumber() @Type(() => Number) @Min(0) pricePerHour: number
-  @IsOptional() @IsInt() @Type(() => Number) @Min(1) capacity?: number
-  @IsOptional() @IsIn(COURT_STATUS) status?: (typeof COURT_STATUS)[number]
+  @IsString() businessId: string;
+  @IsString() name: string;
+  @IsIn(COURT_TYPES) type: (typeof COURT_TYPES)[number];
+  @IsOptional() @IsString() description?: string;
+  @IsNumber() @Type(() => Number) @Min(0) pricePerHour: number;
+  @IsOptional() @IsInt() @Type(() => Number) @Min(1) capacity?: number;
+  @IsOptional() @IsIn(COURT_STATUS) status?: (typeof COURT_STATUS)[number];
 }
 
 export class UpdateCourtDto {
-  @IsOptional() @IsString() name?: string
-  @IsOptional() @IsIn(COURT_TYPES) type?: (typeof COURT_TYPES)[number]
-  @IsOptional() @IsString() description?: string
-  @IsOptional() @IsNumber() @Type(() => Number) @Min(0) pricePerHour?: number
-  @IsOptional() @IsInt() @Type(() => Number) @Min(1) capacity?: number
-  @IsOptional() @IsIn(COURT_STATUS) status?: (typeof COURT_STATUS)[number]
+  @IsOptional() @IsString() name?: string;
+  @IsOptional() @IsIn(COURT_TYPES) type?: (typeof COURT_TYPES)[number];
+  @IsOptional() @IsString() description?: string;
+  @IsOptional() @IsNumber() @Type(() => Number) @Min(0) pricePerHour?: number;
+  @IsOptional() @IsInt() @Type(() => Number) @Min(1) capacity?: number;
+  @IsOptional() @IsIn(COURT_STATUS) status?: (typeof COURT_STATUS)[number];
 }
 
 export class AvailabilitySlotDto {
-  @IsIn(DAYS) dayOfWeek: (typeof DAYS)[number]
+  @IsIn(DAYS) dayOfWeek: (typeof DAYS)[number];
 
-  @IsString() @Matches(/^\d{2}:\d{2}$/) startTime: string
-  @IsString() @Matches(/^\d{2}:\d{2}$/) endTime: string
+  @IsString() @Matches(/^\d{2}:\d{2}$/) startTime: string;
+  @IsString() @Matches(/^\d{2}:\d{2}$/) endTime: string;
 
-  @IsOptional() @IsBoolean() isAvailable?: boolean
-  @IsOptional() @IsNumber() @Type(() => Number) @Min(0) pricePerHour?: number
+  @IsOptional() @IsBoolean() isAvailable?: boolean;
+  @IsOptional() @IsNumber() @Type(() => Number) @Min(0) pricePerHour?: number;
 }
 
 export class ReplaceAvailabilityDto {
@@ -60,5 +60,5 @@ export class ReplaceAvailabilityDto {
   @ArrayNotEmpty()
   @ValidateNested({ each: true })
   @Type(() => AvailabilitySlotDto)
-  availability: AvailabilitySlotDto[]
+  availability: AvailabilitySlotDto[];
 }

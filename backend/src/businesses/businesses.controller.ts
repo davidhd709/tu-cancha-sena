@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common'
-import { BusinessesService } from './businesses.service'
-import { CreateBusinessDto, UpdateBusinessDto } from './dto/business.dto'
-import { JwtAuthGuard } from '../common/guards/jwt-auth.guard'
-import { RolesGuard } from '../common/guards/roles.guard'
-import { Roles } from '../common/decorators/roles.decorator'
-import { CurrentUser, JwtUser } from '../common/decorators/current-user.decorator'
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { BusinessesService } from './businesses.service';
+import { CreateBusinessDto, UpdateBusinessDto } from './dto/business.dto';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { CurrentUser, JwtUser } from '../common/decorators/current-user.decorator';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('businesses')
@@ -14,39 +14,35 @@ export class BusinessesController {
   @Get()
   @Roles('admin')
   findAll() {
-    return this.businesses.findAll()
+    return this.businesses.findAll();
   }
 
   @Get('my-businesses')
   @Roles('bussines', 'admin')
   myBusinesses(@CurrentUser() user: JwtUser) {
-    return this.businesses.findByOwner(user.sub)
+    return this.businesses.findByOwner(user.sub);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.businesses.findOne(id)
+    return this.businesses.findOne(id);
   }
 
   @Post()
   @Roles('admin')
   create(@Body() dto: CreateBusinessDto) {
-    return this.businesses.create(dto)
+    return this.businesses.create(dto);
   }
 
   @Patch(':id')
   @Roles('admin', 'bussines')
-  update(
-    @Param('id') id: string,
-    @Body() dto: UpdateBusinessDto,
-    @CurrentUser() user: JwtUser,
-  ) {
-    return this.businesses.update(id, dto, user)
+  update(@Param('id') id: string, @Body() dto: UpdateBusinessDto, @CurrentUser() user: JwtUser) {
+    return this.businesses.update(id, dto, user);
   }
 
   @Delete(':id')
   @Roles('admin', 'bussines')
   remove(@Param('id') id: string, @CurrentUser() user: JwtUser) {
-    return this.businesses.remove(id, user)
+    return this.businesses.remove(id, user);
   }
 }
