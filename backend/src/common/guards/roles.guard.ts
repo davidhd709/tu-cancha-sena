@@ -1,6 +1,6 @@
-import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common'
-import { Reflector } from '@nestjs/core'
-import { Role, ROLES_KEY } from '../decorators/roles.decorator'
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { Role, ROLES_KEY } from '../decorators/roles.decorator';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -10,13 +10,15 @@ export class RolesGuard implements CanActivate {
     const required = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
       context.getHandler(),
       context.getClass(),
-    ])
-    if (!required || required.length === 0) return true
-
-    const { user } = context.switchToHttp().getRequest()
-    if (!user || !required.includes(user.role)) {
-      throw new ForbiddenException('No tienes permisos para esta acción')
+    ]);
+    if (!required || required.length === 0) {
+      return true;
     }
-    return true
+
+    const { user } = context.switchToHttp().getRequest();
+    if (!user || !required.includes(user.role)) {
+      throw new ForbiddenException('No tienes permisos para esta acción');
+    }
+    return true;
   }
 }

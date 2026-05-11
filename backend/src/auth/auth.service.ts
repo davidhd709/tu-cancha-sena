@@ -1,22 +1,24 @@
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
-import * as bcrypt from 'bcrypt'
-import { PrismaService } from '../prisma/prisma.service'
-import { LoginDto } from './dto/login.dto'
-import { RegisterDto } from './dto/register.dto'
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { PrismaService } from '../prisma/prisma.service';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private prisma: PrismaService,
-    private jwt: JwtService,
+    private jwt: JwtService
   ) {}
 
   async register(dto: RegisterDto) {
-    const exists = await this.prisma.user.findUnique({ where: { email: dto.email } })
-    if (exists) throw new ConflictException('El correo ya está registrado')
+    const exists = await this.prisma.user.findUnique({ where: { email: dto.email } });
+    if (exists) {
+      throw new ConflictException('El correo ya está registrado');
+    }
 
-    const hashed = await bcrypt.hash(dto.password, 10)
+    const hashed = await bcrypt.hash(dto.password, 10);
     const user = await this.prisma.user.create({
       data: {
         email: dto.email,
@@ -26,26 +28,30 @@ export class AuthService {
         phone: dto.phone,
         role: dto.role ?? 'client',
       },
-    })
+    });
 
-    return this.buildAuthPayload(user)
+    return this.buildAuthPayload(user);
   }
 
   async login(dto: LoginDto) {
-    const user = await this.prisma.user.findUnique({ where: { email: dto.email } })
+    const user = await this.prisma.user.findUnique({ where: { email: dto.email } });
     if (!user || !user.isActive) {
-      throw new UnauthorizedException('Credenciales inválidas')
+      throw new UnauthorizedException('Credenciales inválidas');
     }
-    const ok = await bcrypt.compare(dto.password, user.password)
-    if (!ok) throw new UnauthorizedException('Credenciales inválidas')
+    const ok = await bcrypt.compare(dto.password, user.password);
+    if (!ok) {
+      throw new UnauthorizedException('Credenciales inválidas');
+    }
 
-    return this.buildAuthPayload(user)
+    return this.buildAuthPayload(user);
   }
 
   async me(userId: string) {
-    const user = await this.prisma.user.findUnique({ where: { id: userId } })
-    if (!user) throw new UnauthorizedException()
-    return this.toPublicUser(user)
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    return this.toPublicUser(user);
   }
 
   private buildAuthPayload(user: any) {
@@ -53,12 +59,12 @@ export class AuthService {
       sub: user.id,
       email: user.email,
       role: user.role,
-    })
-    return { access_token, user: this.toPublicUser(user) }
+    });
+    return { access_token, user: this.toPublicUser(user) };
   }
 
   private toPublicUser(user: any) {
-    const { password, ...rest } = user
-    return rest
+    const { password, ...rest } = user;
+    return rest;
   }
 }
