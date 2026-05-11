@@ -1,6 +1,6 @@
 # Tu Cancha — Plataforma de reserva de canchas sintéticas
 
-Monorepo separado en dos responsabilidades:katty
+Monorepo separado en dos responsabilidades:
 
 ```
 tucancha-sena/
