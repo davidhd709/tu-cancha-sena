@@ -422,17 +422,17 @@
 
 <script setup lang="ts">
 import { useEditor, EditorContent } from '@tiptap/vue-3'
-import StarterKit from '@tiptap/starter-kit'
-import Table from '@tiptap/extension-table'
-import TableRow from '@tiptap/extension-table-row'
-import TableCell from '@tiptap/extension-table-cell'
-import TableHeader from '@tiptap/extension-table-header'
-import Image from '@tiptap/extension-image'
-import Link from '@tiptap/extension-link'
-import TextAlign from '@tiptap/extension-text-align'
-import Underline from '@tiptap/extension-underline'
-import TextStyle from '@tiptap/extension-text-style'
-import Color from '@tiptap/extension-color'
+import { StarterKit } from '@tiptap/starter-kit'
+import { Table } from '@tiptap/extension-table'
+import { TableRow } from '@tiptap/extension-table-row'
+import { TableCell } from '@tiptap/extension-table-cell'
+import { TableHeader } from '@tiptap/extension-table-header'
+import { Image } from '@tiptap/extension-image'
+import { Link } from '@tiptap/extension-link'
+import { TextAlign } from '@tiptap/extension-text-align'
+import { Underline } from '@tiptap/extension-underline'
+import { TextStyle } from '@tiptap/extension-text-style'
+import { Color } from '@tiptap/extension-color'
 
 const props = defineProps<{ modelValue: string }>()
 const emit  = defineEmits<{ 'update:modelValue': [value: string] }>()
@@ -464,7 +464,7 @@ const editor = useEditor({
 // Sync external modelValue changes (e.g. when form is reset)
 watch(() => props.modelValue, (val) => {
   if (editor.value && editor.value.getHTML() !== val) {
-    editor.value.commands.setContent(val || '', false)
+    editor.value.commands.setContent(val || '', { emitUpdate: false })
   }
 })
 
@@ -496,7 +496,8 @@ const openImageDialog = () => {
   imageDialog.value  = true
 }
 
-const onImageFileSelected = (files: File[]) => {
+const onImageFileSelected = (files: File | File[] | null) => {
+  if (!files) { imagePreview.value = ''; return }
   const file = Array.isArray(files) ? files[0] : files
   if (!file) { imagePreview.value = ''; return }
   const reader = new FileReader()

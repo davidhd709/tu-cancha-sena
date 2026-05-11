@@ -16,7 +16,7 @@
 
         <!-- Brand -->
         <div class="brand-header">
-          <img src="/logo.jpeg" alt="TuCancha" class="auth-brand-logo" />
+          <img src="/LOGO TU CANCHA 2.png" alt="TuCancha" class="auth-brand-logo" />
         </div>
 
         <!-- Slot: login / register card -->

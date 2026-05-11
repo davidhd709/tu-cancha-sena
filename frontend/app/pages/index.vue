@@ -8,7 +8,7 @@
       <div class="nav-inner">
         <!-- Brand -->
         <NuxtLink to="/" class="nav-brand">
-          <img src="/logo.jpeg" alt="TuCancha" class="nav-logo-img" />
+          <img src="/LOGO TU CANCHA HEADER.png" alt="TuCancha" class="nav-logo-img" />
         </NuxtLink>
 
         <!-- Links -->
@@ -240,7 +240,7 @@
     <footer class="footer">
       <div class="container footer-inner">
         <div class="footer-brand">
-          <img src="/logo.jpeg" alt="TuCancha" class="footer-logo-img" />
+          <img src="/LOGO TU CANCHA HEADER.png" alt="TuCancha" class="footer-logo-img" />
         </div>
         <p class="footer-copy">© {{ new Date().getFullYear() }} TuCancha · Pasión por el fútbol · Todos los derechos reservados</p>
         <div class="footer-links">
@@ -277,7 +277,7 @@ const courts = [
   {
     name: 'Cancha El Estadio',
     location: 'Centro · Bogotá',
-    img: '/court-1.jpg',
+    img: '/court-1.png',
     badge: 'Disponible',
     price: '$80.000',
     tags: ['Fútbol 5', 'Iluminación LED', 'Vestuarios'],
@@ -285,7 +285,7 @@ const courts = [
   {
     name: 'Cancha La Colina',
     location: 'Norte · Medellín',
-    img: '/court-2.jpg',
+    img: '/court-2.png',
     badge: 'Popular ⚡',
     price: '$65.000',
     tags: ['Fútbol 7', 'Cubierta', 'Parking'],
@@ -293,7 +293,7 @@ const courts = [
   {
     name: 'Cancha Sunset',
     location: 'Occidente · Cali',
-    img: '/court-3.jpg',
+    img: '/court-3.png',
     badge: 'Nueva',
     price: '$70.000',
     tags: ['Fútbol 5', 'Exterior', '24 hrs'],
@@ -384,7 +384,11 @@ const features = [
   right: 0;
   z-index: 100;
   padding: 18px 0;
-  transition: all 0.3s ease;
+  background: rgba(6, 8, 16, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border-bottom: 1px solid transparent;
+  transition: padding 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
 }
 .navbar--scrolled {
   background: rgba(6, 8, 16, 0.92);
@@ -410,14 +414,14 @@ const features = [
   text-decoration: none;
 }
 .nav-logo-img {
-  height: 56px;
+  height: 60px;
   width: auto;
   border-radius: 8px;
   object-fit: contain;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
+  transform: scale(2.0); /* Esto agranda el logo sin afectar el tamaño de la barra de navegación */
 }
 .nav-logo-img:hover { opacity: 0.85; }
-
 .nav-links {
   display: flex;
   align-items: center;
@@ -970,6 +974,8 @@ const features = [
   background-position: center;
   z-index: 0;
   filter: brightness(0.4) saturate(0.7);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
 }
 .cta-overlay {
   position: absolute;
@@ -1046,7 +1052,7 @@ const features = [
 }
 .footer-brand { display: flex; align-items: center; }
 .footer-logo-img {
-  height: 40px;
+  height: 80px;
   width: auto;
   border-radius: 6px;
   object-fit: contain;
