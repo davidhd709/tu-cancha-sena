@@ -21,11 +21,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-<<<<<<< HEAD
-      apiBase: 'http://localhost:8001/api',
-=======
       apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:8001/api',
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
     },
   },
 
@@ -39,10 +35,6 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       ],
       link: [
-<<<<<<< HEAD
-        { rel: 'icon', type: 'image/png', href: '/LOGO%20TU%20CANCHA%202.png' },
-=======
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {

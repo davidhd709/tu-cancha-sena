@@ -8,11 +8,7 @@
       <div class="nav-inner">
         <!-- Brand -->
         <NuxtLink to="/" class="nav-brand">
-<<<<<<< HEAD
-          <img src="/LOGO TU CANCHA HEADER.png" alt="TuCancha" class="nav-logo-img" />
-=======
           <img src="/logo.jpeg" alt="TuCancha" class="nav-logo-img" />
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
         </NuxtLink>
 
         <!-- Links -->
@@ -244,11 +240,7 @@
     <footer class="footer">
       <div class="container footer-inner">
         <div class="footer-brand">
-<<<<<<< HEAD
-          <img src="/LOGO TU CANCHA HEADER.png" alt="TuCancha" class="footer-logo-img" />
-=======
           <img src="/logo.jpeg" alt="TuCancha" class="footer-logo-img" />
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
         </div>
         <p class="footer-copy">© {{ new Date().getFullYear() }} TuCancha · Pasión por el fútbol · Todos los derechos reservados</p>
         <div class="footer-links">
@@ -285,11 +277,7 @@ const courts = [
   {
     name: 'Cancha El Estadio',
     location: 'Centro · Bogotá',
-<<<<<<< HEAD
-    img: '/court-1.png',
-=======
     img: '/court-1.jpg',
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
     badge: 'Disponible',
     price: '$80.000',
     tags: ['Fútbol 5', 'Iluminación LED', 'Vestuarios'],
@@ -297,11 +285,7 @@ const courts = [
   {
     name: 'Cancha La Colina',
     location: 'Norte · Medellín',
-<<<<<<< HEAD
-    img: '/court-2.png',
-=======
     img: '/court-2.jpg',
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
     badge: 'Popular ⚡',
     price: '$65.000',
     tags: ['Fútbol 7', 'Cubierta', 'Parking'],
@@ -309,11 +293,7 @@ const courts = [
   {
     name: 'Cancha Sunset',
     location: 'Occidente · Cali',
-<<<<<<< HEAD
-    img: '/court-3.png',
-=======
     img: '/court-3.jpg',
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
     badge: 'Nueva',
     price: '$70.000',
     tags: ['Fútbol 5', 'Exterior', '24 hrs'],
@@ -404,15 +384,7 @@ const features = [
   right: 0;
   z-index: 100;
   padding: 18px 0;
-<<<<<<< HEAD
-  background: rgba(6, 8, 16, 0);
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  border-bottom: 1px solid transparent;
-  transition: padding 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
-=======
   transition: all 0.3s ease;
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
 }
 .navbar--scrolled {
   background: rgba(6, 8, 16, 0.92);
@@ -438,16 +410,6 @@ const features = [
   text-decoration: none;
 }
 .nav-logo-img {
-<<<<<<< HEAD
-  height: 60px;
-  width: auto;
-  border-radius: 8px;
-  object-fit: contain;
-  transition: opacity 0.2s, transform 0.2s;
-  transform: scale(2.0); /* Esto agranda el logo sin afectar el tamaño de la barra de navegación */
-}
-.nav-logo-img:hover { opacity: 0.85; }
-=======
   height: 56px;
   width: auto;
   border-radius: 8px;
@@ -456,7 +418,6 @@ const features = [
 }
 .nav-logo-img:hover { opacity: 0.85; }
 
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
 .nav-links {
   display: flex;
   align-items: center;
@@ -1009,11 +970,6 @@ const features = [
   background-position: center;
   z-index: 0;
   filter: brightness(0.4) saturate(0.7);
-<<<<<<< HEAD
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
-=======
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
 }
 .cta-overlay {
   position: absolute;
@@ -1090,11 +1046,7 @@ const features = [
 }
 .footer-brand { display: flex; align-items: center; }
 .footer-logo-img {
-<<<<<<< HEAD
-  height: 80px;
-=======
   height: 40px;
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
   width: auto;
   border-radius: 6px;
   object-fit: contain;

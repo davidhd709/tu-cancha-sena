@@ -422,19 +422,6 @@
 
 <script setup lang="ts">
 import { useEditor, EditorContent } from '@tiptap/vue-3'
-<<<<<<< HEAD
-import { StarterKit } from '@tiptap/starter-kit'
-import { Table } from '@tiptap/extension-table'
-import { TableRow } from '@tiptap/extension-table-row'
-import { TableCell } from '@tiptap/extension-table-cell'
-import { TableHeader } from '@tiptap/extension-table-header'
-import { Image } from '@tiptap/extension-image'
-import { Link } from '@tiptap/extension-link'
-import { TextAlign } from '@tiptap/extension-text-align'
-import { Underline } from '@tiptap/extension-underline'
-import { TextStyle } from '@tiptap/extension-text-style'
-import { Color } from '@tiptap/extension-color'
-=======
 import StarterKit from '@tiptap/starter-kit'
 import { Table } from '@tiptap/extension-table'
 import TableRow from '@tiptap/extension-table-row'
@@ -446,7 +433,6 @@ import TextAlign from '@tiptap/extension-text-align'
 import Underline from '@tiptap/extension-underline'
 import { TextStyle } from '@tiptap/extension-text-style'
 import Color from '@tiptap/extension-color'
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
 
 const props = defineProps<{ modelValue: string }>()
 const emit  = defineEmits<{ 'update:modelValue': [value: string] }>()
@@ -478,11 +464,7 @@ const editor = useEditor({
 // Sync external modelValue changes (e.g. when form is reset)
 watch(() => props.modelValue, (val) => {
   if (editor.value && editor.value.getHTML() !== val) {
-<<<<<<< HEAD
-    editor.value.commands.setContent(val || '', { emitUpdate: false })
-=======
     editor.value.commands.setContent(val || '', false)
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
   }
 })
 
@@ -514,12 +496,7 @@ const openImageDialog = () => {
   imageDialog.value  = true
 }
 
-<<<<<<< HEAD
-const onImageFileSelected = (files: File | File[] | null) => {
-  if (!files) { imagePreview.value = ''; return }
-=======
 const onImageFileSelected = (files: File[]) => {
->>>>>>> f40dbff57e416aca8204ab8dff93aff2d7c2c718
   const file = Array.isArray(files) ? files[0] : files
   if (!file) { imagePreview.value = ''; return }
   const reader = new FileReader()
