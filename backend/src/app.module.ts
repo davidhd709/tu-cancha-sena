@@ -8,12 +8,14 @@ import { BusinessesModule } from './businesses/businesses.module';
 import { CourtsModule } from './courts/courts.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { SoftwareModule } from './software/software.module';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   controllers: [AppController],
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     PrismaModule,
+    UploadsModule,
     AuthModule,
     UsersModule,
     BusinessesModule,
