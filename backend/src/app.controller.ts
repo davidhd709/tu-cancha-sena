@@ -1,12 +1,20 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
+import { PrismaService } from './prisma/prisma.service';
 
 @Controller()
 export class AppController {
+  constructor(private prisma: PrismaService) {}
+
   @Get('health')
-  health() {
-    return {
-      status: 'ok',
-      service: 'tucancha-backend',
-    };
+  async health() {
+    try {
+      await this.prisma.$queryRaw`SELECT 1`;
+      return { status: 'ok', db: 'up' };
+    } catch {
+      throw new HttpException(
+        { status: 'degraded', db: 'down' },
+        HttpStatus.SERVICE_UNAVAILABLE
+      );
+    }
   }
 }
