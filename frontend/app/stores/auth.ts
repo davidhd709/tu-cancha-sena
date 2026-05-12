@@ -89,18 +89,38 @@ export const useAuthStore = defineStore('auth', {
     hydrate() {
       if (import.meta.client) {
         const token = localStorage.getItem('auth_token')
-        const user = localStorage.getItem('auth_user')
-        if (token && user) {
+        const userRaw = localStorage.getItem('auth_user')
+
+        if (!token || !userRaw || userRaw === 'undefined' || userRaw === 'null') {
+          this.token = null
+          this.user = null
+          localStorage.removeItem('auth_token')
+          localStorage.removeItem('auth_user')
+          return
+        }
+
+        try {
+          const parsedUser = JSON.parse(userRaw) as User
           this.token = token
-          this.user = JSON.parse(user)
+          this.user = parsedUser
+        } catch {
+          this.token = null
+          this.user = null
+          localStorage.removeItem('auth_token')
+          localStorage.removeItem('auth_user')
         }
       }
     },
 
     _persist() {
       if (import.meta.client) {
-        localStorage.setItem('auth_token', this.token!)
-        localStorage.setItem('auth_user', JSON.stringify(this.user))
+        if (this.token && this.user) {
+          localStorage.setItem('auth_token', this.token)
+          localStorage.setItem('auth_user', JSON.stringify(this.user))
+        } else {
+          localStorage.removeItem('auth_token')
+          localStorage.removeItem('auth_user')
+        }
       }
     },
   },
