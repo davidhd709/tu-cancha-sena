@@ -1,0 +1,28 @@
+name: Mirror main to Railway repo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout origin (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to railway mirror
+        env:
+          MIRROR_PAT: ${{ secrets.RAILWAY_MIRROR_PAT }}
+          MIRROR_USER: ${{ secrets.RAILWAY_MIRROR_USER }}
+          MIRROR_REPO: tucanchasena-tech/tucanchasena1
+        run: |
+          if [ -z "$MIRROR_PAT" ] || [ -z "$MIRROR_USER" ]; then
+            echo "Faltan secrets RAILWAY_MIRROR_PAT o RAILWAY_MIRROR_USER" >&2
+            exit 1
+          fi
+          git remote add railway "https://${MIRROR_USER}:${MIRROR_PAT}@github.com/${MIRROR_REPO}.git"
+          git push railway main:main --force-with-lease
