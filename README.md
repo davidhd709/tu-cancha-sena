@@ -225,6 +225,33 @@ Ambos proyectos tienen `nixpacks.toml` y `railway.json`. No se necesita Docker.
    - `NUXT_PUBLIC_API_BASE` → la URL pública del backend `+ /api`
 3. Railway detecta `nixpacks.toml`, hace `npm run build` y arranca con Nitro en `$PORT`.
 
+### Repo mirror para Railway
+
+El equipo trabaja en `davidhd709/tu-cancha-sena`. Railway está conectado a una segunda cuenta de GitHub (`tucanchasena-tech/tucanchasena1`) para aprovechar el trial gratuito. El workflow `.github/workflows/mirror-railway.yml` empuja `main` del repo del equipo al repo de Railway en cada push.
+
+**Configuración única (la hace el líder de equipo):**
+
+1. En la cuenta `tucanchasena-tech`, crear un Personal Access Token (Settings → Developer settings → Personal access tokens → Tokens (classic)) con scope `repo`.
+2. En `davidhd709/tu-cancha-sena` → Settings → Secrets and variables → Actions, agregar dos secrets:
+   - `RAILWAY_MIRROR_USER`: `tucanchasena-tech`
+   - `RAILWAY_MIRROR_PAT`: el token recién creado.
+3. El workflow corre solo en cada push a `main`. También se puede disparar manualmente desde Actions → "Mirror main to Railway repo" → Run workflow.
+
+**Reconciliación inicial (una sola vez):**
+
+Antes de activar el workflow, las ramas `main` de los dos repos divergen porque hubo correcciones aplicadas en cada uno por separado. Pasos para alinearlas tomando `davidhd709/tu-cancha-sena` como fuente de verdad:
+
+```bash
+git fetch --all
+git checkout main
+git reset --hard origin/main                # alinear local con el repo del equipo
+git cherry-pick 96fc8bb                     # aplicar el fix de auth hydration que solo estaba en railway
+git push origin main                        # fast-forward al repo del equipo
+git push --force-with-lease railway-origin main  # alinear el repo de railway
+```
+
+Después de eso, el workflow se encarga del resto automáticamente.
+
 ## Notas
 
 - El rol `bussines` mantiene la grafía original del frontend. Si quieres corregirlo a `business`, actualiza el enum en `backend/prisma/schema.prisma`, los `class-validator` `@IsIn` y los chequeos de `role` en el frontend (`stores/auth.ts`, páginas, middleware).
