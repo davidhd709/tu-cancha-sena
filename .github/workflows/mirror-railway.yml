@@ -26,4 +26,4 @@ jobs:
             exit 1
           fi
           git remote add railway "https://${MIRROR_USER}:${MIRROR_PAT}@github.com/${MIRROR_REPO}.git"
-          git push railway main:main --force-with-lease
+          git push railway main:main --force
