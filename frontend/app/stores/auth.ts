@@ -79,28 +79,48 @@ export const useAuthStore = defineStore('auth', {
     logout() {
       this.token = null
       this.user = null
-      if (import.meta.client) {
-        localStorage.removeItem('auth_token')
-        localStorage.removeItem('auth_user')
-      }
+      this._clearStorage()
       navigateTo('/auth/login')
     },
 
     hydrate() {
-      if (import.meta.client) {
-        const token = localStorage.getItem('auth_token')
-        const user = localStorage.getItem('auth_user')
-        if (token && user) {
+      if (!import.meta.client) return
+
+      const token = localStorage.getItem('auth_token')
+      const userRaw = localStorage.getItem('auth_user')
+
+      if (!token || !userRaw || userRaw === 'undefined' || userRaw === 'null') {
+        this._clearStorage()
+        return
+      }
+
+      try {
+        const user = JSON.parse(userRaw)
+        if (user && typeof user === 'object') {
           this.token = token
-          this.user = JSON.parse(user)
+          this.user = user as User
+        } else {
+          this._clearStorage()
         }
+      } catch {
+        this._clearStorage()
       }
     },
 
     _persist() {
-      if (import.meta.client) {
-        localStorage.setItem('auth_token', this.token!)
+      if (!import.meta.client) return
+      if (this.token && this.user) {
+        localStorage.setItem('auth_token', this.token)
         localStorage.setItem('auth_user', JSON.stringify(this.user))
+      } else {
+        this._clearStorage()
+      }
+    },
+
+    _clearStorage() {
+      if (import.meta.client) {
+        localStorage.removeItem('auth_token')
+        localStorage.removeItem('auth_user')
       }
     },
   },
