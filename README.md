@@ -237,20 +237,9 @@ El equipo trabaja en `davidhd709/tu-cancha-sena`. Railway está conectado a una 
    - `RAILWAY_MIRROR_PAT`: el token recién creado.
 3. El workflow corre solo en cada push a `main`. También se puede disparar manualmente desde Actions → "Mirror main to Railway repo" → Run workflow.
 
-**Reconciliación inicial (una sola vez):**
+**Reconciliación inicial:**
 
-Antes de activar el workflow, las ramas `main` de los dos repos divergen porque hubo correcciones aplicadas en cada uno por separado. Pasos para alinearlas tomando `davidhd709/tu-cancha-sena` como fuente de verdad:
-
-```bash
-git fetch --all
-git checkout main
-git reset --hard origin/main                # alinear local con el repo del equipo
-git cherry-pick 96fc8bb                     # aplicar el fix de auth hydration que solo estaba en railway
-git push origin main                        # fast-forward al repo del equipo
-git push --force-with-lease railway-origin main  # alinear el repo de railway
-```
-
-Después de eso, el workflow se encarga del resto automáticamente.
+La primera vez que `main` se actualice después de mergear el PR `henry-fixes-mvp`, el workflow corre y sobrescribe `tucanchasena-tech/tucanchasena1` con el estado del repo del equipo. El fix `96fc8bb` (auth hydration) que solo vivía en el repo de Railway viaja dentro del PR vía cherry-pick, así que no se pierde nada. No hay pasos manuales adicionales.
 
 ## Notas
 
