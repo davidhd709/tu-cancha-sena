@@ -5,3 +5,6 @@ node_modules
 *.log
 
 .claude
+
+# Notas personales de tareas por integrante (no se versionan)
+mis-tareas-*.md
