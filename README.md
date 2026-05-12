@@ -206,19 +206,26 @@ Ambos proyectos tienen `nixpacks.toml` y `railway.json`. No se necesita Docker.
 
 **Backend:**
 1. Crea un servicio Postgres en Railway. Copia `DATABASE_URL`.
-2. Crea un servicio nuevo apuntando a `backend/`. Variables a configurar:
+2. Crea un servicio nuevo apuntando a `backend/`.
+   - Si Railway te pide `Root Directory`, usa `/backend`.
+   - Si configuras `railway.json` manualmente desde Settings, usa la ruta absoluta `/backend/railway.json`.
+3. Variables a configurar:
    - `DATABASE_URL`
    - `JWT_SECRET` (un string fuerte)
    - `CORS_ORIGIN` (la URL pública del frontend desplegado)
    - `PUBLIC_BASE_URL` (la URL pública del backend, para construir links de uploads)
-3. Railway detecta `nixpacks.toml`, ejecuta `npx prisma migrate deploy` al arrancar y luego `node dist/main`.
+4. Railway detecta `nixpacks.toml`, ejecuta `npx prisma migrate deploy` al arrancar y luego `node dist/main`.
+5. El healthcheck del backend queda en `/api/health`.
 
 **Frontend:**
-1. Crea un servicio nuevo apuntando a `frontend/`. Variables:
+1. Crea un servicio nuevo apuntando a `frontend/`.
+   - Si Railway te pide `Root Directory`, usa `/frontend`.
+   - Si configuras `railway.json` manualmente desde Settings, usa la ruta absoluta `/frontend/railway.json`.
+2. Variables:
    - `NUXT_PUBLIC_API_BASE` → la URL pública del backend `+ /api`
-2. Railway detecta `nixpacks.toml`, hace `npm run build` y arranca con Nitro en `$PORT`.
+3. Railway detecta `nixpacks.toml`, hace `npm run build` y arranca con Nitro en `$PORT`.
 
 ## Notas
 
 - El rol `bussines` mantiene la grafía original del frontend. Si quieres corregirlo a `business`, actualiza el enum en `backend/prisma/schema.prisma`, los `class-validator` `@IsIn` y los chequeos de `role` en el frontend (`stores/auth.ts`, páginas, middleware).
-- Los archivos de `paymentProof` se guardan en `backend/uploads/` y se sirven en `/uploads/<archivo>`. En Railway se pierden entre deploys salvo que añadas un volumen persistente o uses S3/Cloudinary.
+- Los archivos de `paymentProof` se guardan en `backend/uploads/` y se sirven en `/uploads/<archivo>`. En Railway se pierden entre deploys salvo que añadas un volumen persistente montado en `/app/uploads` o uses S3/Cloudinary.
