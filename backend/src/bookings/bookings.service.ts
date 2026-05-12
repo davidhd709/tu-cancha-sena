@@ -158,18 +158,6 @@ export class BookingsService {
       throw new BadRequestException('La cancha no abre en ese horario');
     }
 
-    const overlap = await this.prisma.booking.findFirst({
-      where: {
-        courtId: dto.courtId,
-        date,
-        status: { in: ['pending', 'confirmed'] },
-        AND: [{ startTime: { lt: dto.endTime } }, { endTime: { gt: dto.startTime } }],
-      },
-    });
-    if (overlap) {
-      throw new ConflictException('El horario ya está reservado');
-    }
-
     const hours = (endMin - startMin) / 60;
     const slot = court.availability.find(
       (a) =>
@@ -186,19 +174,33 @@ export class BookingsService {
       ? `${this.config.get<string>('PUBLIC_BASE_URL') ?? ''}/uploads/${paymentProofPath}`
       : undefined;
 
-    return this.prisma.booking.create({
-      data: {
-        courtId: dto.courtId,
-        userId,
-        date,
-        startTime: dto.startTime,
-        endTime: dto.endTime,
-        paymentMethod: dto.paymentMethod,
-        paymentProof: proofUrl,
-        notes: dto.notes,
-        totalPrice,
-      },
-      include: { court: true },
+    return this.prisma.$transaction(async (tx) => {
+      const overlap = await tx.booking.findFirst({
+        where: {
+          courtId: dto.courtId,
+          date,
+          status: { in: ['pending', 'confirmed'] },
+          AND: [{ startTime: { lt: dto.endTime } }, { endTime: { gt: dto.startTime } }],
+        },
+      });
+      if (overlap) {
+        throw new ConflictException('El horario ya está reservado');
+      }
+
+      return tx.booking.create({
+        data: {
+          courtId: dto.courtId,
+          userId,
+          date,
+          startTime: dto.startTime,
+          endTime: dto.endTime,
+          paymentMethod: dto.paymentMethod,
+          paymentProof: proofUrl,
+          notes: dto.notes,
+          totalPrice,
+        },
+        include: { court: true },
+      });
     });
   }
 
