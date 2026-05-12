@@ -11,14 +11,14 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { memoryStorage } from 'multer';
 import { BookingsService } from './bookings.service';
 import { AvailableSlotsQueryDto, CreateBookingDto, RejectBookingDto } from './dto/booking.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser, JwtUser } from '../common/decorators/current-user.decorator';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('bookings')
@@ -27,13 +27,13 @@ export class BookingsController {
 
   @Get()
   @Roles('admin')
-  findAll() {
-    return this.bookings.findAll();
+  findAll(@Query() pagination: PaginationDto) {
+    return this.bookings.findAll(pagination);
   }
 
   @Get('my-bookings')
-  myBookings(@CurrentUser() user: JwtUser) {
-    return this.bookings.findMine(user.sub);
+  myBookings(@CurrentUser() user: JwtUser, @Query() pagination: PaginationDto) {
+    return this.bookings.findMine(user.sub, pagination);
   }
 
   @Get('business/:businessId')
@@ -55,13 +55,7 @@ export class BookingsController {
   @Post()
   @UseInterceptors(
     FileInterceptor('paymentProof', {
-      storage: diskStorage({
-        destination: './uploads',
-        filename: (_req, file, cb) => {
-          const unique = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-          cb(null, `${unique}${extname(file.originalname)}`);
-        },
-      }),
+      storage: memoryStorage(),
       limits: { fileSize: 5 * 1024 * 1024 },
     })
   )
@@ -70,7 +64,7 @@ export class BookingsController {
     @CurrentUser() user: JwtUser,
     @UploadedFile() file?: Express.Multer.File
   ) {
-    return this.bookings.create(dto, user.sub, file?.filename);
+    return this.bookings.create(dto, user.sub, file);
   }
 
   @Post(':id/confirm')
