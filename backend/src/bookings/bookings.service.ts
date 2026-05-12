@@ -2,11 +2,14 @@ import {
   BadRequestException,
   ConflictException,
   ForbiddenException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { buildPaginated, getSkipTake } from '../common/utils/paginate';
+import { STORAGE_DRIVER, StorageDriver } from '../uploads/storage.driver';
 import { CreateBookingDto, RejectBookingDto } from './dto/booking.dto';
 
 const DAYS = [
@@ -28,22 +31,33 @@ const toMinutes = (hhmm: string) => {
 export class BookingsService {
   constructor(
     private prisma: PrismaService,
-    private config: ConfigService
+    @Inject(STORAGE_DRIVER) private storage: StorageDriver
   ) {}
 
-  findAll() {
-    return this.prisma.booking.findMany({
-      include: { court: { include: { business: true } }, user: this.userSelect() },
-      orderBy: { createdAt: 'desc' },
-    });
+  async findAll(pagination: PaginationDto) {
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.booking.findMany({
+        include: { court: { include: { business: true } }, user: this.userSelect() },
+        orderBy: { createdAt: 'desc' },
+        ...getSkipTake(pagination),
+      }),
+      this.prisma.booking.count(),
+    ]);
+    return buildPaginated(data, total, pagination);
   }
 
-  findMine(userId: string) {
-    return this.prisma.booking.findMany({
-      where: { userId },
-      include: { court: { include: { business: true } } },
-      orderBy: { date: 'desc' },
-    });
+  async findMine(userId: string, pagination: PaginationDto) {
+    const where = { userId };
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.booking.findMany({
+        where,
+        include: { court: { include: { business: true } } },
+        orderBy: { date: 'desc' },
+        ...getSkipTake(pagination),
+      }),
+      this.prisma.booking.count({ where }),
+    ]);
+    return buildPaginated(data, total, pagination);
   }
 
   async findByBusiness(businessId: string, currentUser: { sub: string; role: string }) {
@@ -126,7 +140,7 @@ export class BookingsService {
     return { date: dateStr, dayOfWeek, courtId, slots };
   }
 
-  async create(dto: CreateBookingDto, userId: string, paymentProofPath?: string) {
+  async create(dto: CreateBookingDto, userId: string, file?: Express.Multer.File) {
     const court = await this.prisma.court.findUnique({
       where: { id: dto.courtId },
       include: { availability: true },
@@ -170,9 +184,7 @@ export class BookingsService {
       : Number(court.pricePerHour);
     const totalPrice = hours * pricePerHour;
 
-    const proofUrl = paymentProofPath
-      ? `${this.config.get<string>('PUBLIC_BASE_URL') ?? ''}/uploads/${paymentProofPath}`
-      : undefined;
+    const proofUrl = file ? (await this.storage.save(file)).url : undefined;
 
     return this.prisma.$transaction(async (tx) => {
       const overlap = await tx.booking.findFirst({
