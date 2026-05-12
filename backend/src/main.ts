@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AppModule } from './app.module';
+import { PrismaExceptionFilter } from './common/filters/prisma-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -23,6 +24,8 @@ async function bootstrap() {
       forbidNonWhitelisted: false,
     })
   );
+
+  app.useGlobalFilters(new PrismaExceptionFilter());
 
   app.useStaticAssets(join(process.cwd(), config.get<string>('UPLOADS_DIR') ?? 'uploads'), {
     prefix: '/uploads/',
