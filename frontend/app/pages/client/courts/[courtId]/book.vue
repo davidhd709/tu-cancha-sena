@@ -148,36 +148,39 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'dashboard', middleware: 'auth' })
 
-const route = useRoute()
-const { apiFetch } = useApi()
-const config = useRuntimeConfig()
-const authStore = useAuthStore()
+const route      = useRoute()
+const toast      = useToast()
+const courtsStore   = useCourtsStore()
+const bookingsStore = useBookingsStore()
 
-const court = ref<any>(null)
-const formRef = ref()
-const loading = ref(false)
-const errorMsg = ref('')
+const formRef      = ref()
+const errorMsg     = ref('')
 const successDialog = ref(false)
 
+// Datos del formulario
 const form = reactive({
   paymentMethod: '',
   paymentProof: null as File | null,
   notes: '',
 })
 
+// Vista previa del comprobante
 const proofPreview = computed(() => {
   if (!form.paymentProof) return null
   return URL.createObjectURL(form.paymentProof as File)
 })
 
+// Duración en horas según query-params
 const hours = computed(() => {
   if (!route.query.startTime || !route.query.endTime) return 1
   const [sh, sm] = (route.query.startTime as string).split(':').map(Number)
-  const [eh, em] = (route.query.endTime as string).split(':').map(Number)
+  const [eh, em] = (route.query.endTime  as string).split(':').map(Number)
   return Math.max(1, (eh * 60 + em - sh * 60 - sm) / 60)
 })
 
+const court      = computed(() => courtsStore.currentCourt)
 const totalPrice = computed(() => (court.value?.pricePerHour ?? 0) * hours.value)
+const loading    = computed(() => bookingsStore.creating)
 
 const r = {
   required: (v: any) => {
@@ -190,36 +193,29 @@ const submitBooking = async () => {
   const { valid } = await formRef.value.validate()
   if (!valid) return
 
-  loading.value = true
   errorMsg.value = ''
 
   try {
-    const formData = new FormData()
-    formData.append('courtId', route.params.courtId as string)
-    formData.append('date', route.query.date as string)
-    formData.append('startTime', route.query.startTime as string)
-    formData.append('endTime', route.query.endTime as string)
-    formData.append('paymentMethod', form.paymentMethod)
-    if (form.notes) formData.append('notes', form.notes)
-    if (form.paymentProof) formData.append('paymentProof', form.paymentProof as File)
-
-    await $fetch(`${config.public.apiBase}/bookings`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${authStore.token}` },
-      body: formData,
+    await bookingsStore.createBooking({
+      courtId:       route.params.courtId as string,
+      date:          route.query.date         as string,
+      startTime:     route.query.startTime    as string,
+      endTime:       route.query.endTime      as string,
+      paymentMethod: form.paymentMethod,
+      notes:         form.notes || undefined,
+      paymentProof:  form.paymentProof,
     })
-
     successDialog.value = true
   } catch (e: any) {
-    errorMsg.value = e?.data?.message || 'Error al crear la reserva'
-  } finally {
-    loading.value = false
+    errorMsg.value = e?.data?.message || bookingsStore.error || 'Error al crear la reserva'
   }
 }
 
 onMounted(async () => {
   try {
-    court.value = await apiFetch<any>(`/courts/${route.params.courtId}`)
-  } catch (e) { console.error(e) }
+    await courtsStore.fetchCourt(route.params.courtId as string)
+  } catch {
+    toast.error('No se pudo cargar la información de la cancha.')
+  }
 })
 </script>

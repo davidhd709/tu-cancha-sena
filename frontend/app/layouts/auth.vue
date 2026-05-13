@@ -16,7 +16,7 @@
 
         <!-- Brand -->
         <div class="brand-header">
-          <img src="/logo.jpeg" alt="TuCancha" class="auth-brand-logo" />
+          <img src="/logo-transparent.png" alt="TuCancha" class="auth-brand-logo" />
         </div>
 
         <!-- Slot: login / register card -->
@@ -126,6 +126,8 @@
   /* subtle glow matching the green logo */
   filter: drop-shadow(0 0 16px rgba(34,197,94,0.3));
   transition: filter 0.3s;
+  transform: scale(1.4);
+  transform-origin: center center;
 }
 .auth-brand-logo:hover {
   filter: drop-shadow(0 0 24px rgba(34,197,94,0.5));

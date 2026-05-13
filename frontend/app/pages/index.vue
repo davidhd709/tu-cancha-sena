@@ -8,7 +8,7 @@
       <div class="nav-inner">
         <!-- Brand -->
         <NuxtLink to="/" class="nav-brand">
-          <img src="/logo.jpeg" alt="TuCancha" class="nav-logo-img" />
+          <img src="/logo-lateral.png" alt="TuCancha" class="nav-logo-img" />
         </NuxtLink>
 
         <!-- Links -->
@@ -240,7 +240,7 @@
     <footer class="footer">
       <div class="container footer-inner">
         <div class="footer-brand">
-          <img src="/logo.jpeg" alt="TuCancha" class="footer-logo-img" />
+          <img src="/logo-2.png" alt="TuCancha" class="footer-logo-img" />
         </div>
         <p class="footer-copy">© {{ new Date().getFullYear() }} TuCancha · Pasión por el fútbol · Todos los derechos reservados</p>
         <div class="footer-links">
@@ -277,7 +277,7 @@ const courts = [
   {
     name: 'Cancha El Estadio',
     location: 'Centro · Bogotá',
-    img: '/court-1.jpg',
+    img: '/court-1.png',
     badge: 'Disponible',
     price: '$80.000',
     tags: ['Fútbol 5', 'Iluminación LED', 'Vestuarios'],
@@ -285,7 +285,7 @@ const courts = [
   {
     name: 'Cancha La Colina',
     location: 'Norte · Medellín',
-    img: '/court-2.jpg',
+    img: '/court-2.png',
     badge: 'Popular ⚡',
     price: '$65.000',
     tags: ['Fútbol 7', 'Cubierta', 'Parking'],
@@ -293,7 +293,7 @@ const courts = [
   {
     name: 'Cancha Sunset',
     location: 'Occidente · Cali',
-    img: '/court-3.jpg',
+    img: '/court-3.png',
     badge: 'Nueva',
     price: '$70.000',
     tags: ['Fútbol 5', 'Exterior', '24 hrs'],
@@ -415,6 +415,8 @@ const features = [
   border-radius: 8px;
   object-fit: contain;
   transition: opacity 0.2s;
+  transform: scale(1.4);
+  transform-origin: left center;
 }
 .nav-logo-img:hover { opacity: 0.85; }
 
@@ -1051,6 +1053,8 @@ const features = [
   border-radius: 6px;
   object-fit: contain;
   opacity: 0.85;
+  transform: scale(1.4);
+  transform-origin: left center;
 }
 .footer-copy { font-size: 0.75rem; color: #334155; flex: 1; text-align: center; }
 .footer-links { display: flex; gap: 20px; }
